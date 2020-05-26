@@ -25,8 +25,8 @@ object ChildActorExerscise extends App {
         println("[master] initializing...}")
         val childrenRefs =
           for (i <- 1 to nChildren)
-            yield context.actorOf(Props[WordCounterWorker], s"wcw_$i")
-        context.become(withChildren(childrenRefs, 0, 0, Map()))
+            yield context.actorOf(Props[WordCounterWorker], s"wcw_$i") // create n children
+        context.become(withChildren(childrenRefs, 0, 0, Map())) // start from 0 child
     }
 
     def withChildren(childrenRefs: Seq[ActorRef],
@@ -68,7 +68,7 @@ object ChildActorExerscise extends App {
     override def receive: Receive = {
       case "go" =>
         val master = context.actorOf(Props[WordCounterMaster], "master")
-        master ! Initialize(3)
+        master ! Initialize(3) //initialize 3 children
         val texts = List("I love Akka", "Scala is super dope", "yes", "me too")
         texts.foreach(text => master ! text)
       case count: Int =>
