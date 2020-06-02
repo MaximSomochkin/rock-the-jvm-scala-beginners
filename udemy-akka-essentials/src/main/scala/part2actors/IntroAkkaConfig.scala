@@ -28,6 +28,7 @@ object IntroAkkaConfig extends App {
   /**
    * 2 - config file : akka automatic looking for file at main/resources/application.conf
    * */
+
   val defaultConfigFileSystem = ActorSystem("DefaultConfigFileDemo")
   val defaultConfigActor = defaultConfigFileSystem.actorOf(Props[SimpleLoggingActor])
   defaultConfigActor ! "Remember me"
@@ -35,14 +36,15 @@ object IntroAkkaConfig extends App {
   /**
    * 3 - create config in the same file
    * */
-    val specialConfig = ConfigFactory.load().getConfig("mySpecialConfig")
+
+  val specialConfig = ConfigFactory.load().getConfig("mySpecialConfig")
   val specialConfigSystem = ActorSystem("SpecialConfigDemo", specialConfig)
   val specialConfigActor = specialConfigSystem.actorOf(Props[SimpleLoggingActor])
   specialConfigActor ! "Remember me I'm special"
 
   /**
    * 4 -separate config in another file
-   * */
+   **/
 
   val separateConfig = ConfigFactory.load("secretFolder/secretConfiguration.conf")
   println(s"separate config log level: ${separateConfig.getString("akka.loglevel")}")
@@ -51,6 +53,7 @@ object IntroAkkaConfig extends App {
    * 5 - different file formats
    * JSON, Properties
    * */
+
   val jsonConfig = ConfigFactory.load("json/jsonConfig.json")
   println(s"json config: ${jsonConfig.getString("aJsonProperty")}")
   println(s"json config: ${jsonConfig.getString("akka.loglevel")}")
@@ -58,7 +61,4 @@ object IntroAkkaConfig extends App {
   val propsConfig = ConfigFactory.load("props/propsConfiguration.properties")
   println(s"properties config: ${propsConfig.getString("my.simpleProperty")}")
   println(s"properties config: ${propsConfig.getString("akka.loglevel")}")
-
-
-
 }
