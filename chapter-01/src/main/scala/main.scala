@@ -5,7 +5,7 @@ import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-object Example extends App {
+object main extends App {
 
   // Case class representing a row in our table:
   final case class Message(
